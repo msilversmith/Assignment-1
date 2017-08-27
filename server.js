@@ -1,3 +1,4 @@
+
 var http = require('http'), 
     fs = require('fs'), 
     url = require('url'),
@@ -12,10 +13,11 @@ var requestHandler = function(request, response) {
   /*
     Your request handler should send listingData in the JSON format if a GET request 
     is sent to the '/listings' path. Otherwise, it should send a 404 error. 
-
     HINT: explore the request object and its properties 
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
    */
+   response.writeHead(200, { 'Content-Type': 'text/plain' });
+   response.end(data);
 };
 
 fs.readFile('listings.json', 'utf8', function(err, data) {
@@ -23,4 +25,9 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
     This callback function should save the data in the listingData variable, 
     then start the server. 
    */
+   if (err){
+    throw err;
+   }
+   listingData = data;
+   http.createServer(requestHandler).listen(port);
 });
