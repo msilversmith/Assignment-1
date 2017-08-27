@@ -9,15 +9,17 @@ var listingData, server;
 
 var requestHandler = function(request, response) {
   var parsedUrl = url.parse(request.url);
-
+  response.writeHead(200, { 'Content-Type': 'text/plain' });
   /*
     Your request handler should send listingData in the JSON format if a GET request 
     is sent to the '/listings' path. Otherwise, it should send a 404 error. 
     HINT: explore the request object and its properties 
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
    */
-   response.writeHead(200, { 'Content-Type': 'text/plain' });
-   response.end(data);
+   if (parsedUrl.pathname == '/listings'){
+     response.write(listingData);
+    }
+    response.end();
 };
 
 fs.readFile('listings.json', 'utf8', function(err, data) {
