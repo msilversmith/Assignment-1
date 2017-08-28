@@ -9,8 +9,7 @@ var listingData, server;
 
 var requestHandler = function(request, response) {
   var parsedUrl = url.parse(request.url);
-  response.writeHead(200, { 'Content-Type': 'text/plain' });
-  /*
+    /*
     Your request handler should send listingData in the JSON format if a GET request 
     is sent to the '/listings' path. Otherwise, it should send a 404 error. 
     HINT: explore the request object and its properties 
@@ -32,7 +31,7 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
     then start the server. 
    */
    if (err){
-    throw 404;
+    throw err;
    }
    listingData = data;
    http.createServer(requestHandler).listen(port);
