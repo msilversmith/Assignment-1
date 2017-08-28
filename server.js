@@ -17,7 +17,11 @@ var requestHandler = function(request, response) {
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
    */
    if (parsedUrl.pathname == '/listings'){
+     response.writeHead(200, { 'Content-Type': 'text/plain' });
      response.write(listingData);
+    }
+    else{
+      response.writeHead(404, { 'Content-Type': 'text/plain' });
     }
     response.end();
 };
@@ -28,7 +32,7 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
     then start the server. 
    */
    if (err){
-    throw err;
+    throw 404;
    }
    listingData = data;
    http.createServer(requestHandler).listen(port);
