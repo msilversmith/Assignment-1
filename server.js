@@ -9,20 +9,22 @@ var listingData, server;
 
 var requestHandler = function(request, response) {
   var parsedUrl = url.parse(request.url);
-    /*
+  response.writeHead(200, { 'Content-Type': 'text/plain' });
+  /*
     Your request handler should send listingData in the JSON format if a GET request 
     is sent to the '/listings' path. Otherwise, it should send a 404 error. 
     HINT: explore the request object and its properties 
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
    */
    if (parsedUrl.pathname == '/listings'){
-     response.writeHead(200, { 'Content-Type': 'text/plain' });
+      response.writeHead(200, { 'Content-Type': 'text/plain' });
      response.write(listingData);
+     response.end();
     }
     else{
       response.writeHead(404, { 'Content-Type': 'text/plain' });
+      response.end('Bad gateway error');
     }
-    response.end();
 };
 
 fs.readFile('listings.json', 'utf8', function(err, data) {
@@ -35,4 +37,5 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
    }
    listingData = data;
    http.createServer(requestHandler).listen(port);
+   console.log('Sever Started');
 });
