@@ -18,13 +18,14 @@
 
               -->
             <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
-            <input type="text" class="form-control" placeholder="Search">
+            <input  type="text"class="form-control" placeholder="Search" ng-model="query">
           </div>
           <div class="tableWrapper">
-            <table class="table table-striped table-hover">
+            <table id="ufBuildings" class="table table-striped table-hover">
               <tr>
                 <th>Code</th>
                 <th>Building Name</th>
+                <th></th>
                 <th></th>
               </tr>
               <!-- 
@@ -32,8 +33,13 @@
                   Fill in the rest of the table:
                       * populate the rows with the code and name of each listing
                       * include a way to remove individual listings
-
                 --> 
+              <tr ng-repeat="code in listings | filter:query | orderBy:code:name">
+                <td>{{ listings[$index].code }}</td>
+                <td>{{ listings[$index].name }}</td>
+                <td> <button ng-click="showDetails($index)">More Details </button> </td>
+                <td> <button ng-click="deleteListing($index)">Delete Listing</button> </td>
+              </tr>
             </table>
           </div>
           <!-- 
@@ -41,6 +47,14 @@
               Write an HTML form that adds new listings to the directory 
 
             -->
+                <form name="skills" ng-submit="addListing()">
+                Code: <input type="text" name="code" ng-model="code" required /><p></p>
+                Name: <input type="text" name="name" ng-model="name" required /><p></p>
+                Address: <input type="text" name="address" ng-model="address" /><p></p>
+                Latitude: <input type="text" name="latitude" ng-model="latitude"  /><p></p>
+                Longitude: <input type="text" name="longitude" ng-model="longitude"  /><p></p>
+                <button ng-click="addListing()">Add</button>
+              </form>
         </div>
         <div class="col-md-6">
           <div class="jumbotron">
@@ -51,6 +65,9 @@
                    * consider how to use ng-click within the the table to implement this feature
 
              -->
+            <div ng-controller="ListingsController">
+               <p> {{ details }} </p>
+            </div>
           </div>
         </div>
       </div>
