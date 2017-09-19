@@ -7,7 +7,9 @@ var fs = require('fs'),
     mongoose = require('mongoose'), 
     Schema = mongoose.Schema, 
     Listing = require('./ListingSchema.js'), 
-    config = require('./config');
+    config = require('./config'),
+    data = require('./listings.json');
+
 
 /* Connect to your database */
 mongoose.connect(config.uri, { useMongoClient: true })
